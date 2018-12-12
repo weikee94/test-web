@@ -1,25 +1,50 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import axios from "axios";
+
+const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ""
+    };
+  }
+
+  submitHandler = () => {
+    console.log("Submitted!");
+    axios.post(`${rootAPI}todos`, this.state);
+  };
+
+  handleChange(event) {
+    let name, obj;
+    name = event.target.name;
+    console.log(event.target.value);
+    this.setState(((obj = {}), (obj["" + name] = event.target.value), obj));
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <form className="form">
+          <div className="form-group col-md-6">
+            <input
+              type="text"
+              className="form-control"
+              onChange={this.handleChange.bind(this)}
+              placeholder="text"
+              name="text"
+              value={this.state.text}
+            />
+          </div>
+        </form>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={() => this.submitHandler()}
+        >
+          submit
+        </button>
       </div>
     );
   }
