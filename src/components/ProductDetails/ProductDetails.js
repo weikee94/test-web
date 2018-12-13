@@ -8,7 +8,8 @@ class ProductDetails extends Component {
     super(props);
     this.state = {
       data: [],
-      text: ""
+      text: "",
+      cover: ""
     };
   }
   componentDidMount() {
@@ -16,7 +17,8 @@ class ProductDetails extends Component {
       const data = res.data.todo;
       this.setState({
         data,
-        text: data.text
+        text: data.text,
+        cover: data.cover
       });
     });
   }
@@ -31,7 +33,8 @@ class ProductDetails extends Component {
   updateHandler = () => {
     axios
       .patch(`${rootAPI}todos/${this.props.match.params.id}`, {
-        text: this.state.text
+        text: this.state.text,
+        cover: this.state.cover
       })
       .then(success => {
         console.log(success);
@@ -51,6 +54,15 @@ class ProductDetails extends Component {
             type="text"
             className="form-control"
             value={this.state.text}
+            onChange={e => this.changeHandler(e)}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="cover"
+            className="form-control"
+            value={this.state.cover}
             onChange={e => this.changeHandler(e)}
           />
         </div>
