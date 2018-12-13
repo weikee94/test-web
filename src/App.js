@@ -22,15 +22,35 @@ class App extends Component {
     });
   }
 
+  deleteHandler = id => {
+    axios.delete(`${rootAPI}todos/${id}`);
+  };
+
   render() {
     return (
       <div className="App">
         <NavLink to="/create">
           <div>create</div>
         </NavLink>
-        {this.state.todos.length > 0
-          ? this.state.todos.map((data, i) => <div key={i}>{data.text}</div>)
-          : null}
+        <div className="container">
+          <div className="row">
+            {this.state.todos.length > 0
+              ? this.state.todos.map((data, i) => (
+                  <div className="col-md-4" key={i}>
+                    {data.text}
+                    <div>
+                      <button
+                        className="btn btn-danger"
+                        onClick={id => this.deleteHandler(data._id)}
+                      >
+                        delete
+                      </button>
+                    </div>
+                  </div>
+                ))
+              : null}
+          </div>
+        </div>
       </div>
     );
   }
