@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
 
@@ -8,43 +9,28 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ""
+      todos: []
     };
   }
 
-  submitHandler = () => {
-    console.log("Submitted!");
-    axios.post(`${rootAPI}todos`, this.state);
-  };
-
-  handleChange(event) {
-    let name, obj;
-    name = event.target.name;
-    console.log(event.target.value);
-    this.setState(((obj = {}), (obj["" + name] = event.target.value), obj));
+  componentDidMount() {
+    axios.get(`${rootAPI}todos`).then(res => {
+      const todos = res.data.todos;
+      this.setState({
+        todos
+      });
+    });
   }
+
   render() {
     return (
       <div className="App">
-        <form className="form">
-          <div className="form-group col-md-6">
-            <input
-              type="text"
-              className="form-control"
-              onChange={this.handleChange.bind(this)}
-              placeholder="text"
-              name="text"
-              value={this.state.text}
-            />
-          </div>
-        </form>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={() => this.submitHandler()}
-        >
-          submit
-        </button>
+        <NavLink to="/create">
+          <div>create</div>
+        </NavLink>
+        {this.state.todos.length > 0
+          ? this.state.todos.map((data, i) => <div key={i}>{data.text}</div>)
+          : null}
       </div>
     );
   }
