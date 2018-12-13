@@ -27,10 +27,10 @@ class ProductDetails extends Component {
     let name, obj;
     name = e.target.name;
     this.setState(((obj = {}), (obj["" + name] = e.target.value), obj));
-    console.log("updated valud: ", this.state.text);
   };
 
   updateHandler = () => {
+    console.log("Submitted valud: ", this.state);
     axios
       .patch(`${rootAPI}todos/${this.props.match.params.id}`, {
         text: this.state.text,
