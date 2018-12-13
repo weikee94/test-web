@@ -37,13 +37,18 @@ class App extends Component {
             {this.state.todos.length > 0
               ? this.state.todos.map((data, i) => (
                   <div className="col-md-4" key={i}>
-                    <img
-                      src={data.cover}
-                      style={{ width: 100 }}
-                      alt={data.text}
-                    />
-                    <NavLink to={`/product/${data._id}`}>{data.text}</NavLink>
                     <div>
+                      <img
+                        src={data.cover}
+                        style={{ width: 100 }}
+                        alt={data.text}
+                      />
+                      <div>{data.text}</div>
+                    </div>
+                    <div>
+                      <NavLink to={`/product/${data._id}`}>
+                        <button className="btn btn-primary">edit</button>
+                      </NavLink>
                       <button
                         className="btn btn-danger"
                         onClick={id => this.deleteHandler(data._id)}
