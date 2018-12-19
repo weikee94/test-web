@@ -9,7 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
+      email: "",
+      password: "",
+      loginemail: "",
+      loginpassword: ""
     };
   }
 
@@ -22,13 +26,67 @@ class App extends Component {
     });
   }
 
+  handleChange(event) {
+    let name, obj;
+    name = event.target.name;
+    console.log(event.target.value);
+    this.setState(((obj = {}), (obj["" + name] = event.target.value), obj));
+  }
+
   deleteHandler = id => {
     axios.delete(`${rootAPI}todos/${id}`);
+  };
+
+  registerHandler = () => {
+    console.log(this.state);
+    const body = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    axios.post(`${rootAPI}users`, body);
+  };
+
+  loginHandler = () => {
+    console.log(this.state);
+    const body = {
+      email: this.state.loginemail,
+      password: this.state.loginpassword
+    };
+    axios.post(`${rootAPI}users/login`, body);
   };
 
   render() {
     return (
       <div className="App">
+        <div>sign up</div>
+        <input
+          type="text"
+          placeholder="email"
+          name="email"
+          onChange={this.handleChange.bind(this)}
+        />
+        <input
+          type="text"
+          placeholder="password"
+          name="password"
+          onChange={this.handleChange.bind(this)}
+        />
+        <button onClick={() => this.registerHandler()}>sign up</button>
+
+        <div>login</div>
+        <input
+          type="text"
+          placeholder="email"
+          name="loginemail"
+          onChange={this.handleChange.bind(this)}
+        />
+        <input
+          type="text"
+          placeholder="password"
+          name="loginpassword"
+          onChange={this.handleChange.bind(this)}
+        />
+        <button onClick={() => this.loginHandler()}>login</button>
         <NavLink to="/create">
           <div>create</div>
         </NavLink>
