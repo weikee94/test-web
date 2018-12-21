@@ -8,7 +8,8 @@ class CreateProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ""
+      text: "",
+      cover: ""
     };
   }
   submitHandler = () => {
@@ -38,26 +39,41 @@ class CreateProduct extends Component {
   }
   render() {
     return (
-      <div className="container">
-        <form className="form">
-          <div className="form-group col-md-6">
-            <input
-              type="text"
-              className="form-control"
-              onChange={this.handleChange.bind(this)}
-              placeholder="text"
-              name="text"
-              value={this.state.text}
-            />
-          </div>
-        </form>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={() => this.submitHandler()}
-        >
-          submit
-        </button>
+      <div className="row">
+        <div className="col-md-3" />
+        <div className="col-md-6">
+          <form>
+            <h1>Create</h1>
+            <div className="form-group">
+              <label className="control-label">Text</label>
+              <input
+                type="text"
+                className="form-control"
+                onChange={this.handleChange.bind(this)}
+                placeholder="text"
+                name="text"
+                value={this.state.text}
+              />
+              <label className="control-label">Cover</label>
+              <input
+                type="text"
+                className="form-control"
+                onChange={this.handleChange.bind(this)}
+                placeholder="cover"
+                name="cover"
+                value={this.state.cover}
+              />
+            </div>
+          </form>
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg"
+            onClick={() => this.submitHandler()}
+          >
+            submit
+          </button>
+        </div>
+        <div className="col=md-3" />
       </div>
     );
   }
