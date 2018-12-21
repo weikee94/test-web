@@ -11,7 +11,7 @@ class CreateProduct extends Component {
     };
   }
   submitHandler = () => {
-    console.log("Submitted!");
+    console.log("Submitted!", console.log(this));
     axios.post(`${rootAPI}todos`, this.state);
   };
 

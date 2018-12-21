@@ -3,7 +3,8 @@ import "./App.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+// const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+const rootAPI = "http://localhost:3000/";
 
 class App extends Component {
   constructor(props) {
@@ -13,17 +14,28 @@ class App extends Component {
       email: "",
       password: "",
       loginemail: "",
-      loginpassword: ""
+      loginpassword: "",
+      authString: ""
     };
   }
 
   componentDidMount() {
-    axios.get(`${rootAPI}todos`).then(res => {
-      const todos = res.data.todos;
-      this.setState({
-        todos
+    // const authString = this.state.authString;
+    const authString = localStorage.getItem("jwtToken");
+
+    axios
+      .get(`${rootAPI}todos`, {
+        headers: {
+          "x-auth": authString
+        }
+      })
+      .then(res => {
+        console.log("Response: ", res);
+        const todos = res.data.todos;
+        this.setState({
+          todos
+        });
       });
-    });
   }
 
   handleChange(event) {
@@ -47,49 +59,30 @@ class App extends Component {
   };
 
   loginHandler = () => {
-    console.log(this.state);
     const body = {
       email: this.state.loginemail,
       password: this.state.loginpassword
     };
-    axios.post(`${rootAPI}users/login`, body);
+    console.log(body);
+    axios.post(`${rootAPI}users/login`, body).then(
+      res => {
+        // console.log("response from login: ", res);
+
+        const token = res.data.token;
+        localStorage.setItem("jwtToken", token);
+        this.setState({
+          authString: res.data.token
+        });
+      },
+      error => {
+        console.log("Error from login: ", error);
+      }
+    );
   };
 
   render() {
     return (
       <div className="App">
-        <div>sign up</div>
-        <input
-          type="text"
-          placeholder="email"
-          name="email"
-          onChange={this.handleChange.bind(this)}
-        />
-        <input
-          type="text"
-          placeholder="password"
-          name="password"
-          onChange={this.handleChange.bind(this)}
-        />
-        <button onClick={() => this.registerHandler()}>sign up</button>
-
-        <div>login</div>
-        <input
-          type="text"
-          placeholder="email"
-          name="loginemail"
-          onChange={this.handleChange.bind(this)}
-        />
-        <input
-          type="text"
-          placeholder="password"
-          name="loginpassword"
-          onChange={this.handleChange.bind(this)}
-        />
-        <button onClick={() => this.loginHandler()}>login</button>
-        <NavLink to="/create">
-          <div>create</div>
-        </NavLink>
         <div className="container">
           <div className="row">
             {this.state.todos.length > 0
