@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+// const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+const rootAPI = "http://localhost:3000/";
 
 class CreateProduct extends Component {
   constructor(props) {
@@ -11,8 +12,22 @@ class CreateProduct extends Component {
     };
   }
   submitHandler = () => {
-    console.log("Submitted!", console.log(this));
-    axios.post(`${rootAPI}todos`, this.state);
+    const authString = localStorage.getItem("jwtToken");
+
+    axios
+      .post(`${rootAPI}todos`, this.state, {
+        headers: {
+          "x-auth": authString
+        }
+      })
+      .then(
+        () => {
+          console.log("success");
+        },
+        () => {
+          console.log("failed");
+        }
+      );
   };
 
   handleChange(event) {
@@ -23,7 +38,7 @@ class CreateProduct extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <form className="form">
           <div className="form-group col-md-6">
             <input

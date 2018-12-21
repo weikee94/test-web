@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+// const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+const rootAPI = "http://localhost:3000/";
 
 class ProductDetails extends Component {
   constructor(props) {

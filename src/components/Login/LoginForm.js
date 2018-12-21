@@ -5,7 +5,7 @@ import axios from "axios";
 // const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
 const rootAPI = "http://localhost:3000/";
 
-class SignupForm extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,18 +34,17 @@ class SignupForm extends Component {
     };
     console.log(body);
 
-    axios.post(`${rootAPI}users`, body).then(
+    axios.post(`${rootAPI}users/login`, body).then(
       res => {
         const token = res.data.token;
         localStorage.setItem("jwtToken", token);
-        console.log(res);
         setTimeout(this.props.history.push("/"), 3000);
       },
       error => {
         this.setState({
           isLoading: false
         });
-        console.log("Error from sign up: ", error);
+        console.log("Error from login: ", error);
       }
     );
   };
@@ -54,7 +53,7 @@ class SignupForm extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <h1>Sign Up</h1>
+          <h1>Login</h1>
           <div className="form-group">
             <label className="control-label">Email</label>
             <input
@@ -82,7 +81,7 @@ class SignupForm extends Component {
               className="btn btn-primary btn-lg"
               disabled={this.state.isLoading}
             >
-              Sign Up
+              Login
             </button>
           </div>
         </form>
@@ -91,4 +90,4 @@ class SignupForm extends Component {
   }
 }
 
-export default withRouter(SignupForm);
+export default withRouter(LoginForm);
