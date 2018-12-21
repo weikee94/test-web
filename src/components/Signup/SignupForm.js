@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
-// const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
-const rootAPI = "http://localhost:3000/";
+const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+// const rootAPI = "http://localhost:3000/";
 
 class SignupForm extends Component {
   constructor(props) {

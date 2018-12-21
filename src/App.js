@@ -3,8 +3,8 @@ import "./App.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-// const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
-const rootAPI = "http://localhost:3000/";
+const rootAPI = "https://stark-anchorage-68703.herokuapp.com/";
+// const rootAPI = "http://localhost:3000/";
 
 class App extends Component {
   constructor(props) {
